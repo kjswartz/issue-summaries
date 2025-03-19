@@ -7,8 +7,7 @@ import path from "path";
 
 const SEVEN_DAYS_AGO = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000);
 
-const BUILD_DIRECTORY =
-  ".github/actions/create-draft-tpm-weekly-discussion/dist";
+const BUILD_DIRECTORY = "./dist";
 
 const scriptPath =
   process.env.NODE_ENV !== "test"
@@ -51,10 +50,10 @@ export const createSummaryContent = (
 ) => {
   const isDryrun = url === "dry_run";
   let summaryContent = isDryrun
-    ? `### Weekly Report Draft Dry Run\n`
-    : `### Weekly Report Draft Created\n`;
+    ? `### Weekly Report Dry Run\n`
+    : `### Weekly Report Created\n`;
   summaryContent += isDryrun ? `${title}\n` : `[${title}](${url})\n`;
-  summaryContent += `### 🟢 Weekly Report Draft Issues\n`;
+  summaryContent += `### 🟢 Weekly Report Issues\n`;
 
   if (activeIssuesData.length > 0) {
     activeIssuesData.forEach((issue) => {
@@ -95,8 +94,8 @@ export const sortAndFilterIssues = async (issueNodes: IssuesResponseNode[]) => {
       const parsed = parseData(comment.body);
       // if issue comment createdAt within last 7 days add to activeIssuesData
       if (
-        parsed["isFlexReport"] === "true" &&
-        parsed["flexReportName"] === "flex" &&
+        parsed["isSummaryReport"] === "true" &&
+        parsed["summaryReportName"] === "summary" &&
         new Date(comment.createdAt) >= SEVEN_DAYS_AGO
       ) {
         const issueData = {

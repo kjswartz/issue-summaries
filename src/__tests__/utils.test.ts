@@ -88,7 +88,7 @@ _insert lookahead details here_
 </details>
 
 <!-- data key="isSummaryDiscussion" value="true" -->
-<!-- data key="summaryDiscussion" value="weekly-draft" -->
+<!-- data key="summaryDiscussion" value="summary" -->
 `;
 
 describe("buildDiscussionBody", () => {
@@ -105,9 +105,9 @@ describe("createSummaryContent", () => {
   it("should return discussion title with url", () => {
     const title = "DRAFT Discussion Title";
     const url = "https://123.com";
-    const string = `### Weekly Report Draft Created
+    const string = `### Weekly Report Created
 [DRAFT Discussion Title](https://123.com)
-### 🟢 Weekly Report Draft Issues
+### 🟢 Weekly Report Issues
 🟢 (on track) **[Title 1](https://1.com)**
 Summary 1
 🟡 (at risk) **[Title 2](https://2.com)**
@@ -138,13 +138,13 @@ describe("parseData", () => {
   
   
   
-    <!-- data key="isFlexReport" value="true" -->
-    <!-- data key="flexReportName" value="flex" -->`;
+    <!-- data key="isSummaryReport" value="true" -->
+    <!-- data key="summaryReportName" value="summary" -->`;
     expect(parseData(commentBody)).toEqual({
       trending: "🟢 on track\n",
       update: "test update\n",
-      isFlexReport: "true",
-      flexReportName: "flex",
+      isSummaryReport: "true",
+      summaryReportName: "summary",
     });
   });
 });
@@ -157,20 +157,20 @@ describe("sortAndFilterIssues", () => {
         comments: {
           nodes: [
             {
-              body: `<!-- data key="isFlexReport" value="true" -->
+              body: `<!-- data key="isSummaryReport" value="true" -->
                 <!-- data key="update" start -->
                 test update old update
                 <!-- data end -->
-              <!-- data key="flexReportName" value="flex" -->`,
+              <!-- data key="summaryReportName" value="summary" -->`,
               createdAt: `${new Date(currentDate.getTime() - 1 * 24 * 60 * 60 * 1000)}`,
               url: "https:/123.com",
             },
             {
-              body: `<!-- data key="isFlexReport" value="true" -->
+              body: `<!-- data key="isSummaryReport" value="true" -->
                 <!-- data key="update" start -->
                 test update latest update
                 <!-- data end -->
-              <!-- data key="flexReportName" value="flex" -->`,
+              <!-- data key="summaryReportName" value="summary" -->`,
               createdAt: `${currentDate}`,
               url: "https:/123.com",
             },
@@ -186,20 +186,20 @@ describe("sortAndFilterIssues", () => {
         comments: {
           nodes: [
             {
-              body: `<!-- data key="isFlexReport" value="true" -->
+              body: `<!-- data key="isSummaryReport" value="true" -->
               <!-- data key="update" start -->
               test update older update
               <!-- data end -->
-              <!-- data key="flexReportName" value="flex" -->`,
+              <!-- data key="summaryReportName" value="summary" -->`,
               createdAt: `${new Date(currentDate.getTime() - 1 * 24 * 60 * 60 * 1000)}`,
               url: "https:/123.com",
             },
             {
-              body: `<!-- data key="isFlexReport" value="true" -->
+              body: `<!-- data key="isSummaryReport" value="true" -->
               <!-- data key="update" start -->
               test update latest update
               <!-- data end -->
-              <!-- data key="flexReportName" value="flex" -->`,
+              <!-- data key="summaryReportName" value="summary" -->`,
               createdAt: `${currentDate}`,
               url: "https:/321.com",
             },
@@ -216,8 +216,8 @@ describe("sortAndFilterIssues", () => {
     expect(sorted).toEqual({
       activeSortedIssuesData: [
         {
-          isFlexReport: "true",
-          flexReportName: "flex",
+          isSummaryReport: "true",
+          summaryReportName: "summary",
           update: "test update latest update",
           number: 1,
           title: "test",
@@ -227,8 +227,8 @@ describe("sortAndFilterIssues", () => {
       ],
       closedSortedIssuesData: [
         {
-          isFlexReport: "true",
-          flexReportName: "flex",
+          isSummaryReport: "true",
+          summaryReportName: "summary",
           update: "test update latest update",
           number: 2,
           title: "test",
@@ -244,8 +244,8 @@ describe("runAiSummaryShellScript", () => {
   const isTesting = true;
   const data: IssuesData[] = [
     {
-      isFlexReport: "true",
-      flexReportName: "flex",
+      isSummaryReport: "true",
+      summaryReportName: "summary",
       update: "test update latest update",
       number: 1,
       title: "test",
@@ -258,8 +258,8 @@ describe("runAiSummaryShellScript", () => {
     const result = await runAiSummaryShellScript(data, isTesting);
     expect(result).toEqual([
       {
-        isFlexReport: "true",
-        flexReportName: "flex",
+        isSummaryReport: "true",
+        summaryReportName: "summary",
         update: "test update latest update",
         number: 1,
         title: "test",

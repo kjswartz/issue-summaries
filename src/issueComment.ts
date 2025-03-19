@@ -6,8 +6,8 @@ export interface IssuesData {
   trending?: string;
   target_date?: string;
   update?: string;
-  isFlexReport?: string;
-  flexReportName?: string;
+  isSummaryReport?: string;
+  summaryReportName?: string;
 }
 
 interface BaseIssueCommentTypes {
