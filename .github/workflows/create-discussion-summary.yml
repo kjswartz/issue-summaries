@@ -1,0 +1,39 @@
+name: Create Discussion Summary
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Discussion Title'
+        required: true
+        default: "DRAFT: 2025-MM-DD - Weekly Summary"
+      category_slug:
+        description: 'Discussion Category Slug'
+        required: true
+      is_dry_run:
+        description: 'Skip creating discussion job (true/false). For testing to see which issues will be included in the discussion.'
+        default: false
+        type: boolean
+
+jobs:
+  create-discussion-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Create Draft Discussion
+        id: create-discussion
+        uses: ./action
+        env:
+          IS_DRY_RUN: ${{ github.event.inputs.is_dry_run }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          CATEGORY_SLUG: ${{ github.event.inputs.category_slug }}
+          TITLE: ${{ github.event.inputs.title }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

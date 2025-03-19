@@ -1,0 +1,24 @@
+name: Create Discussion Summary
+description: Creates a discussion for summary based on the issue comments generated with the /update command.
+runs:
+  using: node20
+  main: dist/index.js
+inputs:
+  IS_DRY_RUN:
+    description: Skip creating discussion job (true/false). For testing to see which issues will be included in the discussion.
+    required: false
+  REPO_NAME:
+    description: The repository to search for issues and create the discussion in.
+    required: true
+  REPO_OWNER:
+    description: The owner of the repository to search for issues and create the discussion in.
+    required: true
+  CATEGORY_SLUG:
+    description: The category slug to use for the discussion.
+    required: true
+  TITLE:
+    description: The title of the discussion.
+    required: true
+  GH_TOKEN:
+    description: The GitHub token to use for the gh model commands to create the AI summaries.
+    required: true

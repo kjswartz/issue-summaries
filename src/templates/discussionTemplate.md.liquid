@@ -1,0 +1,45 @@
+### Summary
+<!-- data key="summary" start -->
+_insert summary here_
+<!-- data end -->
+
+### 🚀 Looking Ahead
+<!-- data key="lookAhead" start -->
+_insert lookahead details here_
+<!-- data end -->
+
+### 🟢 Active Initiatives
+<!-- data key="activeProjectsSummary" start -->
+{% for initiative in activeIssuesData %}
+  - {{ initiative.title }}
+    {% if initiative.summary %}{{ initiative.summary }}{% else %}_insert summary_{% endif %}
+{% endfor %}
+<!-- data end -->
+{% unless closedIssuesData.length == 0 %}
+### 🟣 Closed Projects
+<!-- data key="closedProjectsSummary" start -->
+{% for initiative in closedIssuesData %}
+  - {{ initiative.title }}
+    {% if initiative.summary %}{{ initiative.summary }}{% else %}_insert summary_{% endif %}
+{% endfor %}
+<!-- data end -->
+{% endunless -%}
+### Original Rollup Summary
+
+<details><summary> Expand to read original content! </summary>
+<!-- data key="activeProjectsRollup" start -->
+{% for initiative in activeIssuesData %}
+  - {{ initiative.title }}
+    {{ initiative.body }}
+{% endfor %}
+<!-- data end -->
+<!-- data key="closedProjectsRollup" start -->
+{% for initiative in closedIssuesData %}
+  - {{ initiative.title }}
+    {{ initiative.body }}
+{% endfor %}
+<!-- data end -->
+</details>
+
+<!-- data key="isSummaryDiscussion" value="true" -->
+<!-- data key="summaryDiscussion" value="weekly-draft" -->
