@@ -14,7 +14,6 @@ summarize() {
   echo "$update" | gh models run gpt-4o-mini "Create a short one to two sentence summary for the update on a project initiative"
 }
 
-isTesting=$2
 # Capture the output of the while loop
 output=$(echo "$1" | jq -c '.[]' | while read -r issue; do
   update=$(echo "$issue" | jq -r '.update')
