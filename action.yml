@@ -1,5 +1,10 @@
 name: Create Discussion Summary
 description: Creates a discussion for summary based on the issue comments generated with the /update command.
+
+branding:
+  icon: 'message-square'
+  color: orange
+
 runs:
   using: node20
   main: dist/index.js
